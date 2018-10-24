@@ -1,3 +1,5 @@
+package ultimateintermediator;
+
 
 
 import java.io.DataInputStream;
@@ -34,7 +36,7 @@ class ClientHandler extends Thread
        
             try { 
               InterClient IC =new InterClient();
-                received="ASSIGN";
+                received="COMPLETE";
                 //received = dis.readUTF(); 
                 System.out.println(received);
                 
@@ -92,6 +94,13 @@ class ClientHandler extends Thread
                     
                     case "COMPLETE":
                         IC.Request("COMPLETE");
+                        received="Insert into tickets(name,seats) values('prashant','1');";
+                       // received=dis.readUTF();
+                       // System.out.println(received);
+                         IC.Request(received);
+                         
+                         String ticketno=IC.Response();
+                         dos.writeUTF(ticketno); 
                         
                         
                                 
