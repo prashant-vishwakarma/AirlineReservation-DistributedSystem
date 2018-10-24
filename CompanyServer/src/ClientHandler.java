@@ -15,6 +15,8 @@ public class ClientHandler extends Thread {
 	final DataOutputStream dataOutputStream;
 	final Socket socket;
 	final int Id;
+	
+	static volatile int count;
 
 	static final String DB_URL = "jdbc:mysql://localhost:3306/indigo";
 	static final String DB_DRV = "com.mysql.jdbc.Driver";
@@ -62,6 +64,9 @@ public class ClientHandler extends Thread {
 		try {
 			connection = (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
 			statement = (Statement) connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT max(ticket_id) FROM tickets;");
+			rs.next();
+			count = Integer.parseInt(rs.getString(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -103,6 +108,15 @@ public class ClientHandler extends Thread {
 			statement.executeUpdate(query);
 		}
 	}
+	
+	void bookSeats() throws SQLException, IOException{
+		String query = dataInputStream.readUTF();
+		System.out.println(query);
+		statement.executeUpdate(query);
+		count++;
+		dataOutputStream.writeUTF(Integer.toString(count));
+		
+	}
 
 	void sayBye() throws IOException {
 		dataOutputStream.writeUTF("BYEBYE");
@@ -141,6 +155,10 @@ public class ClientHandler extends Thread {
 			}
 			case "ASSIGN":{
 				assignSeats();
+				break;
+			}
+			case "COMPLETE":{
+				bookSeats();
 				break;
 			}
 			default: {
