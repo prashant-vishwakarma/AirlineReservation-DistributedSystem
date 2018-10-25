@@ -56,7 +56,7 @@ public class DSFinal {
              
                 java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-              new DSClient2().setVisible(true);
+              new NewJFrame().setVisible(true);
             }
         });
                 
