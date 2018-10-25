@@ -1,6 +1,9 @@
+package ultimateintermediator;
 
 import java.io.*; 
 import java.net.*; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
   
 public class Intermediate 
 { 
@@ -8,7 +11,7 @@ public class Intermediate
     DataInputStream dis;
 
     public Intermediate() throws IOException
-    {ServerSocket ss = new ServerSocket(5001); 
+    {ServerSocket ss = new ServerSocket(1025); 
        while (true)  
         { 
     Socket s = null;   
@@ -25,7 +28,8 @@ public class Intermediate
             catch (IOException e){ 
                 s.close(); 
                 e.printStackTrace(); 
-            } 
+            }
+           
         } 
     } 
     public static void main(String[] args) throws IOException  

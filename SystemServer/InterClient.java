@@ -1,3 +1,5 @@
+package ultimateintermediator;
+
  
 import java.io.*; 
 import java.net.*; 
@@ -13,7 +15,7 @@ public class InterClient
     { 
         try
         { 
-            s = new Socket("192.168.1.104", 1024); 
+            s = new Socket("192.168.43.225", 1024); 
            dis = new DataInputStream(s.getInputStream()); 
            dos = new DataOutputStream(s.getOutputStream()); 
            scn= new Scanner(System.in); 
